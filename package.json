@@ -14,6 +14,10 @@
   },
   "author": "heftymouse",
   "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "tcp-ping": "^0.1.1"
+  },
   "bugs": {
     "url": "https://github.com/heftymouse/aetherrack-private/issues"
   },
