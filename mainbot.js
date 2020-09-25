@@ -3,6 +3,7 @@ const client = new Discord.Client();
 const https = require('https');
 const tcpp = require('tcp-ping');
 const cfg = require('./config.json');
+const PORT = process.env.PORT || 3000;
 
 client.once('ready', () => {
     console.log('Ready!');
@@ -98,7 +99,7 @@ client.on('message', message => {
             break;
 
         case 'ping':
-            tcpp.probe(args[0], 80, function(err, available) {
+            tcpp.probe(args[0], PORT, function(err, available) {
                 console.log(available);
                 if(args[0] && (!args[1] || args[1] <= 30)) {
                     tcpp.ping({ address: args[0], attempts: parseInt(args[1]), timeout: parseInt(args[2])}, function(err, data) {
