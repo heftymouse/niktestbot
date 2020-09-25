@@ -1,5 +1,6 @@
 {
     "prefix": "!",
-    "token": "token_goes_here",
-    "libio_api_key": "token_goes_here"
+    "op_role": "Aetherrack Op",
+    "token": "NzU2MDcwNjM1NDM1ODUxODE2.X2Mfpg.VN-wn62yS3dSzNB3qBodedVcJmg",
+    "libio_api_key": "bc2a2e8e2edd0dc514d95e037f781e42"
 }
