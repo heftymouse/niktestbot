@@ -5,7 +5,7 @@
   "main": "mainbot.js",
   "scripts": {
     "test": "console.log('Test Success');",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
