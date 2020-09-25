@@ -4,7 +4,8 @@
   "description": "Private Discord Bot",
   "main": "mainbot.js",
   "scripts": {
-    "test": "console.log('Test Success');"
+    "test": "console.log('Test Success');",
+    "heroku-postbuild": "npm run build",
   },
   "repository": {
     "type": "git",
