@@ -106,7 +106,7 @@ client.on('message', message => {
             });
 
             if(args[0] && (!args[1] || args[1] <= 30)) {
-                tcpp.ping({ address: args[0], attempts: parseInt(args[1]), timeout: parseInt(args[2])}, function(err, data) {
+                tcpp.ping({ address: args[0], attempts: parseInt(args[1]), timeout: parseInt(args[2]), port: PORT}, function(err, data) {
                     let pingEmbed = new Discord.MessageEmbed()
                         .setColor('BLUE')
                         .setTitle('Ping Results')
