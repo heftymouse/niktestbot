@@ -101,12 +101,12 @@ client.on('message', message => {
             break;
 
         case 'ping':
-            tcpp.probe(args[0], PORT, function(err, available) {
+            tcpp.probe(args[0], 80, function(err, available) {
                 console.log(available);
             });
 
             if(args[0] && (!args[1] || args[1] <= 30)) {
-                tcpp.ping({ address: args[0], attempts: parseInt(args[1]), timeout: parseInt(args[2]), port: PORT}, function(err, data) {
+                tcpp.ping({ address: args[0], attempts: parseInt(args[1]), timeout: parseInt(args[2]), port: 80}, function(err, data) {
                     let pingEmbed = new Discord.MessageEmbed()
                         .setColor('BLUE')
                         .setTitle('Ping Results')
