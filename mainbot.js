@@ -17,6 +17,8 @@ client.on('message', message => {
     let args = message.content.slice(cfg.prefix.length).trim().split(/ +/);
     let command = args.shift().toLowerCase();
 
+    console.log(`Command \'${command}\' sent by ${message.author.username}. Args: ${args}`);
+
     switch(command) {
 
         case 'help':
