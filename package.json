@@ -1,0 +1,26 @@
+{
+  "name": "aetherrack-private",
+  "version": "1.0.0",
+  "description": "Private Discord Bot",
+  "main": "mainbot.js",
+  "scripts": {
+    "test": "console.log('Test Success');",
+    "heroku-postbuild": "npm run build",
+    "start": "node mainbot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heftymouse/aetherrack-private.git"
+  },
+  "author": "heftymouse",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "tcp-ping": "^0.1.1",
+    "http-request": "^0.7.0"
+  },
+  "bugs": {
+    "url": "https://github.com/heftymouse/aetherrack-private/issues"
+  },
+  "homepage": "https://github.com/heftymouse/aetherrack-private#readme"
+}
