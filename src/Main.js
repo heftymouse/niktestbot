@@ -41,8 +41,9 @@ client.on('message', message => {
                 .setTitle('NASA Astronomy Picture of the Day')
                 .setImage(JSON.parse(data).url)
                 .addField(JSON.parse(data).title, JSON.parse(data).explanation)
-                .addField('Link to HD image', JSON.parse(data).hdurl);
-            Utils.setDefaultFooter(apodEmbed)
+                .addField('Link to HD image', JSON.parse(data).hdurl)
+                .setTimestamp()
+                .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
             message.channel.send({embed: apodEmbed}); 
         });
           
@@ -72,8 +73,9 @@ client.on('message', message => {
                         {name: 'Average', value: data.avg.toFixed(3), inline: true },
                         {name: 'Maximum', value: data.max.toFixed(3), inline: true },
                         {name: 'Minimum', value: data.min.toFixed(3), inline: true },
-                    );
-                Utils.setDefaultFooter(pingEmbed)
+                    )
+                    .setTimestamp()
+                    .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
                 message.channel.send({embed: pingEmbed});
             });
         }
@@ -100,8 +102,9 @@ client.on('message', message => {
                         {name: 'Description', value: `${res.description}`},
                         {name: 'Project Homepage', value: `${res.homepage}`},
                         {name: 'Package Manager Page', value: `${res.package_manager_url}`},
-                    );
-                Utils.setDefaultFooter(packageEmbed)
+                    )
+                    .setTimestamp()
+                    .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
                 message.channel.send({embed: packageEmbed});
             });
 
