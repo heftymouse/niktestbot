@@ -80,34 +80,33 @@ client.on('message', message => {
     }
 
     else if(command === 'package') {
-    https.get(`https://libraries.io/api/${args[0]}/${args[1]}?api_key=${cfg.libio_api_key}`, (resp) => {
-        let data = '';
+        https.get(`https://libraries.io/api/${args[0]}/${args[1]}?api_key=${cfg.libio_api_key}`, (resp) => {
+            let data = '';
 
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
 
-        resp.on('end', () => {
-            let res = JSON.parse(data);
-            const packageEmbed = new Discord.MessageEmbed()
-                .setColor("GREEN")
-                .setTitle('Package Search Results')
-                .addFields(
-                    {name: 'Package name', value: `${res.name}` },
-                    {name: 'Language', value: `${res.language} (${res.platform})`},
-                    {name: 'Licenses', value: `${res.licenses}`, inline:true},
-                    {name: 'Latest version', value: `${res.latest_stable_release_number}`, inline:true },
-                    {name: 'Description', value: `${res.description}` },
-                    {name: 'Project Homepage', value: `${res.homepage}` },
-                    {name: 'Package Manager Page', value: `${res.package_manager_url}` },
-                );
-            Utils.setDefaultFooter(packageEmbed)
-            message.channel.send({embed: packageEmbed}); 
-        });
+            resp.on('end', () => {
+                let res = JSON.parse(data);
+                const packageEmbed = new Discord.MessageEmbed()
+                    .setColor("GREEN")
+                    .setTitle('Package Search Results')
+                    .addFields(
+                        {name: 'Package name', value: `${res.name}`},
+                        {name: 'Language', value: `${res.language} (${res.platform})`},
+                        {name: 'Licenses', value: `${res.licenses}`, inline: true},
+                        {name: 'Latest version', value: `${res.latest_stable_release_number}`, inline: true},
+                        {name: 'Description', value: `${res.description}`},
+                        {name: 'Project Homepage', value: `${res.homepage}`},
+                        {name: 'Package Manager Page', value: `${res.package_manager_url}`},
+                    );
+                Utils.setDefaultFooter(packageEmbed)
+                message.channel.send({embed: packageEmbed});
+            });
 
         }).on("error", (err) => {
             message.channel.send("Error: " + err.message);
-    }); 
-
+        });
     }
 });
