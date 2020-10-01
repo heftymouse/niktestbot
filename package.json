@@ -2,9 +2,9 @@
   "name": "aetherrack",
   "version": "1.0.0",
   "description": "Nik's test bot",
-  "main": "src/mainbot.js",
+  "main": "src/Main.js",
   "scripts": {
-    "test": "node src/mainbot.js"
+    "test": "node src/Main.js"
   },
   "repository": {
     "type": "git",
