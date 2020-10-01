@@ -1,0 +1,26 @@
+{
+  "name": "aetherrack",
+  "version": "1.0.0",
+  "description": "Nik's test bot",
+  "main": "src/mainbot.js",
+  "scripts": {
+    "test": "testbot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heftymouse/aetherrack.git"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "heftymouse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heftymouse/aetherrack/issues"
+  },
+  "homepage": "https://github.com/heftymouse/aetherrack#readme",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}
