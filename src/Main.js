@@ -15,101 +15,119 @@ client.on('message', message => {
 
     let args = message.content.slice(cfg.prefix.length).trim().split(/ +/);
     let command = args.shift().toLowerCase();
-    if(command === 'bigsmoke') {
-        message.channel.send("I'll have two number 9s, a number 9 large, a number 6 with extra dip, a number 7, two number 45s, one with cheese, and a large soda.");
-    }
 
-    else if(command === 'quit') {
-        message.channel.send("Quitting...");
-        function quit() {
-            process.exit();
-        }
-        setTimeout(quit, 500);
-    }
+    console.log(`Command \'${command}\' sent by ${message.author.username}. Args: ${args}`);
 
-    else if(command === 'apod') {
-        https.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', (resp) => {
-        let data = '';
-          
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-          
-        resp.on('end', () => {
-            const apodEmbed = new Discord.MessageEmbed()
-                .setColor("PURPLE")
-                .setTitle('NASA Astronomy Picture of the Day')
-                .setImage(JSON.parse(data).url)
-                .addField(JSON.parse(data).title, JSON.parse(data).explanation)
-                .addField('Link to HD image', JSON.parse(data).hdurl)
-                .setTimestamp()
-                .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
-            message.channel.send({embed: apodEmbed}); 
-        });
-          
-        }).on("error", (err) => {
-            message.channel.send("Error: " + err.message);
-        });
-    }
+    switch(command) {
 
-    else if(command === 'youtube') {
-        message.channel.send('This is a WIP and isn\'t complete at the moment.\nAlso get stickbugged lol');
-    }
+        case 'help':
+            message.channel.send('Help is on the way!');
+            break;
 
-    else if(command === 'ping') {
-        tcpp.probe(args[0], 80, function(err, available) {
-            console.log(available);
-        });
+        case 'quit':
+            let role = message.guild.roles.cache.find(r => r.name === cfg.op_role);
+            if(message.member.roles.cache.has(role.id)) {
+                message.channel.send('Quitting...');
+                function quit() {
+                    process.exit();
+                }
+                setTimeout(quit, 300);
+            }
+            else {
+                message.channel.send('You have insufficient permissions to do this.');
+            }
+            break;
 
-        if(args[0] && (!args[1] || args[1] <= 30)) {
-            tcpp.ping({ address: args[0], attempts: parseInt(args[1]), timeout: parseInt(args[2])}, function(err, data) {
-                let pingEmbed = new Discord.MessageEmbed()
-                    .setColor('BLUE')
-                    .setTitle('Ping Results')
-                    .addFields(
-                        {name: 'Server', value: data.address, inline: true },
-                        {name: 'Port', value: data.port, inline: true },
-                        {name: 'Attempts', value: data.attempts, inline: true },
-                        {name: 'Average', value: data.avg.toFixed(3), inline: true },
-                        {name: 'Maximum', value: data.max.toFixed(3), inline: true },
-                        {name: 'Minimum', value: data.min.toFixed(3), inline: true },
-                    )
-                    .setTimestamp()
-                    .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
-                message.channel.send({embed: pingEmbed});
+        case 'apod':
+            https.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', (resp) => {
+                let data = '';
+
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                resp.on('end', () => {
+                    let res = JSON.parse(data);
+                    const apodEmbed = new Discord.MessageEmbed()
+                        .setColor("PURPLE")
+                        .setTitle('NASA Astronomy Picture of the Day')
+                        .setImage(res.url)
+                        .addField(res.title, res.explanation)
+                        .addField('Link to HD image', res.hdurl)
+                        .setTimestamp()
+                        .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
+                    message.channel.send({embed: apodEmbed});
+                });
+
+            }).on("error", (err) => {
+                message.channel.send("Error: " + err.message);
             });
-        }
-    }
+            break;
 
-    else if(command === 'package') {
-        https.get(`https://libraries.io/api/${args[0]}/${args[1]}?api_key=${cfg.libio_api_key}`, (resp) => {
-            let data = '';
+        case 'bigsmoke':
+            message.channel.send("I'll have two number 9s, a number 9 large, a number 6 with extra dip, a number 7, two number 45s, one with cheese, and a large soda.");
+            break;
 
-            resp.on('data', (chunk) => {
-                data += chunk;
+        case 'package':
+            https.get(`https://libraries.io/api/${args[0]}/${args[1]}?api_key=${cfg.libio_api_key}`, (resp) => {
+                let data = '';
+
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                resp.on('end', () => {
+                    let res = JSON.parse(data);
+                    const packageEmbed = new Discord.MessageEmbed()
+                        .setColor("GREEN")
+                        .setTitle('Package Search Results')
+                        .addFields(
+                            {name: 'Package name', value: `${res.name}` },
+                            {name: 'Language', value: `${res.language} (${res.platform})`},
+                            {name: 'Licenses', value: `${res.licenses}`, inline:true},
+                            {name: 'Latest version', value: `${res.latest_stable_release_number}`, inline:true },
+                            {name: 'Description', value: `${res.description}` },
+                            {name: 'Project Homepage', value: `${res.homepage}` },
+                            {name: 'Package Manager Page', value: `${res.package_manager_url}` },
+                        )
+                        .setTimestamp()
+                        .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
+                    message.channel.send({embed: packageEmbed});
+                });
+
+            }).on("error", (err) => {
+                message.channel.send("Error: " + err.message);
             });
+            break;
 
-            resp.on('end', () => {
-                let res = JSON.parse(data);
-                const packageEmbed = new Discord.MessageEmbed()
-                    .setColor("GREEN")
-                    .setTitle('Package Search Results')
-                    .addFields(
-                        {name: 'Package name', value: `${res.name}`},
-                        {name: 'Language', value: `${res.language} (${res.platform})`},
-                        {name: 'Licenses', value: `${res.licenses}`, inline: true},
-                        {name: 'Latest version', value: `${res.latest_stable_release_number}`, inline: true},
-                        {name: 'Description', value: `${res.description}`},
-                        {name: 'Project Homepage', value: `${res.homepage}`},
-                        {name: 'Package Manager Page', value: `${res.package_manager_url}`},
-                    )
-                    .setTimestamp()
-                    .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
-                message.channel.send({embed: packageEmbed});
+        case 'ping':
+            tcpp.probe(args[0], 80, function(err, available) {
+                console.log(available);
             });
 
-        }).on("error", (err) => {
-            message.channel.send("Error: " + err.message);
-        });
+            if(args[0] && (!args[1] || args[1] <= 30)) {
+                tcpp.ping({ address: args[0], attempts: parseInt(args[1]), timeout: parseInt(args[2]), port: 80}, function(err, data) {
+                    let pingEmbed = new Discord.MessageEmbed()
+                        .setColor('BLUE')
+                        .setTitle('Ping Results')
+                        .addFields(
+                            {name: 'Server', value: data.address, inline: true },
+                            {name: 'Port', value: data.port, inline: true },
+                            {name: 'Attempts', value: data.attempts, inline: true },
+                            {name: 'Average', value: data.avg.toFixed(3), inline: true },
+                            {name: 'Maximum', value: data.max.toFixed(3), inline: true },
+                            {name: 'Minimum', value: data.min.toFixed(3), inline: true },
+                        )
+                        .setTimestamp()
+                        .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
+
+                    message.channel.send({embed: pingEmbed});
+                });
+            }
+            break;
+
+        case 'youtube':
+            message.channel.send('This is a WIP and isn\'t complete at the moment.\nAlso get stickbugged lol');
+            break;
     }
 });
