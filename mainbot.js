@@ -47,12 +47,13 @@ client.on('message', message => {
                 });
             
                 resp.on('end', () => {
+                    let res = JSON.parse(data);
                     const apodEmbed = new Discord.MessageEmbed()
                         .setColor("PURPLE")
                         .setTitle('NASA Astronomy Picture of the Day')
-                        .setImage(JSON.parse(data).url)
-                        .addField(JSON.parse(data).title, JSON.parse(data).explanation)
-                        .addField('Link to HD image', JSON.parse(data).hdurl)
+                        .setImage(res.url)
+                        .addField(res.title, res.explanation)
+                        .addField('Link to HD image', res.hdurl)
                         .setTimestamp()
                         .setFooter(`Requested by ${message.author.username}`, message.author.avatarURL());
                     message.channel.send({embed: apodEmbed}); 
