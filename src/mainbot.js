@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const https = require('https');
 const tcpp = require('tcp-ping');
-const cfg = require('../config_example.json');
+const cfg = require('./config.json');
 
 client.once('ready', () => {
     console.log('Ready!');

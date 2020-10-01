@@ -4,7 +4,7 @@
   "description": "Nik's test bot",
   "main": "src/mainbot.js",
   "scripts": {
-    "test": "testbot"
+    "test": "node src/mainbot.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/heftymouse/aetherrack#readme",
   "dependencies": {
-    "discord.js": "^12.3.1"
+    "discord.js": "^12.3.1",
+    "tcp-ping": "^0.1.1"
   }
 }
