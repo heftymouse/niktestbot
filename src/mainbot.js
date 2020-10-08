@@ -3,7 +3,7 @@ const cfg = require('./cfg/config.json');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const commands = new Map();
-const files = fs.readdirSync('./modules').filter(file => file.endsWith('.js'));
+const files = fs.readdirSync('./src/modules').filter(file => file.endsWith('.js'));
 
 files.forEach((file) => {
     const command = require(`./modules/${file}`);
@@ -11,7 +11,7 @@ files.forEach((file) => {
 });
 
 client.once('ready', () => {
-    console.log('Ready!');
+    console.log('Ready!'); 
 });
 
 client.login(cfg.token);

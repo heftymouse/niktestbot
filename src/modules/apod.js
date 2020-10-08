@@ -14,16 +14,25 @@ module.exports = {
         });
     
         resp.on('end', () => {
-            let res = JSON.parse(data);
-            const apodEmbed = new Discord.MessageEmbed()
-                .setColor("PURPLE")
-                .setTitle('NASA Astronomy Picture of the Day')
-                .setImage(res.url)
-                .addField(res.title, res.explanation)
-                .addField('Link to HD image', res.hdurl)
-                .setTimestamp()
-                .setFooter(`Requested by ${msg.author.username}`, msg.author.avatarURL());
-            msg.channel.send({embed: apodEmbed}); 
+            try {
+                let res = JSON.parse(data);
+                if(res.explanation.length > 1024) {
+                    res.explanation = res.explanation.substring(0, 1020).substring(0, res.explanation.lastIndexOf(' ')) + '...';
+                }
+                const apodEmbed = new Discord.MessageEmbed()
+                    .setColor("PURPLE")
+                    .setTitle('NASA Astronomy Picture of the Day')
+                    .setURL('https://apod.nasa.gov/apod/astropix.html')
+                    .setImage(res.url)
+                    .addField(res.title, res.explanation)
+                    .addField('Link to HD image', res.hdurl)
+                    .setTimestamp()
+                    .setFooter(`Requested by ${msg.author.username}`, msg.author.avatarURL());
+                msg.channel.send({embed: apodEmbed}); 
+            }
+            catch {
+                msg.channel.send('Something went wrong, check the log for more details');
+            }
         });
     
         }).on("error", (err) => {
