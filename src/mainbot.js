@@ -23,5 +23,5 @@ client.on('message', message => {
     let commandName = args.shift().toLowerCase();
 
     console.log(`Command \'${commandName}\' sent by ${message.author.username}. Args: ${args}`);
-    commands.get(commandName).exec(message, args);
+    commands.get(commandName).exec(message, args, client);
 });
