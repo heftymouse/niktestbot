@@ -11,7 +11,7 @@ files.forEach((file) => {
 });
 
 client.once('ready', () => {
-    console.log('Ready!'); 
+    console.log('Ready!');
 });
 
 client.login(cfg.token);
